@@ -102,6 +102,6 @@ Prediction Visualization: Graphical representation of risk factors
 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
 📧 Contact
-For questions or feedback, please open an issue or contact your-email@example.com.
+For questions or feedback, please open an issue or contact your- pranayshaurya.pro@gmail.com .
 
 Disclaimer: This tool provides risk assessment based on machine learning predictions and should not replace professional medical advice or public health initiatives. Always consult health authorities during dengue season.RetryClaude does not have the ability to run the code it generates yet. Claude does not have internet access. Links provided may not be accurate or up to date.Claude can make mistakes. Please double-check responses. 3.7 Sonnet
