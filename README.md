@@ -44,7 +44,7 @@ bashCopypython app.py
 
 Access the web interface:
 
-file:///Users/pranay/Vscode/python3/Disease-Prediction-of-Dengue-main/index.html
+https://ai-healthcare-project.vercel.app
 
 Flask interface: http://localhost:5000
 Gradio interface: http://localhost:7860
