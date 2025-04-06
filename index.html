@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dengue AI Assistant</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #c0392b;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-left: 4px solid #e74c3c;
+            background-color: #f8d7da;
+            display: none;
+        }
+        
+        #audioRecorder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .record-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 24px;
+            margin: 10px;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .flex-item {
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dengue AI Assistant</h1>
+        <p class="description">Predict dengue outbreak risk with voice or manual input</p>
+        
+        <div class="section">
+            <h2>Voice Assistant</h2>
+            <div id="audioRecorder">
+                <p>Click the microphone button and speak your weather parameters</p>
+                <p class="example">Example: "Temperature is 32 degrees, humidity is 85 percent, rainfall is 120 mm, and month is 6"</p>
+                
+                <div>
+                    <label for="language">Response Language:</label>
+                    <select id="language">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ta">Tamil</option>
+                        <option value="te">Telugu</option>
+                        <option value="bn">Bengali</option>
+                    </select>
+                </div>
+                
+                <button id="recordButton" class="record-button">🎤</button>
+                <p id="recordingStatus"></p>
+                
+                <div id="voiceResult" style="display:none;">
+                    <h3>Recognized Text:</h3>
+                    <p id="recognizedText"></p>
+                    <h3>Parameters:</h3>
+                    <p id="extractedParams"></p>
+                    <h3>Prediction:</h3>
+                    <div id="prediction"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Manual Input</h2>
+            <p>Enter weather parameters manually to get the prediction</p>
+            
+            <div class="flex-container">
+                <div class="flex-item">
+                    <label for="temperature">Temperature (°C):</label>
+                    <input type="number" id="temperature" min="0" max="50" step="0.1">
+                </div>
+                <div class="flex-item">
+                    <label for="humidity">Humidity (%):</label>
+                    <input type="number" id="humidity" min="0" max="100" step="0.1">
+                </div>
+            </div>
+            
+            <div class="flex-container">
+                <div class="flex-item">
+                    <label for="rainfall">Rainfall (mm):</label>
+                    <input type="number" id="rainfall" min="0" step="0.1">
+                </div>
+                <div class="flex-item">
+                    <label for="month">Month:</label>
+                    <select id="month">
+                        <option value="">Select Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="predictButton">Predict</button>
+            <div id="result"></div>
+        </div>
+        
+        <footer>
+            <p>Dengue AI Assistant &copy; 2025 - Created for public health awareness</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Recording functionality
+        let mediaRecorder;
+        let audioChunks = [];
+        
+        document.getElementById('recordButton').addEventListener('click', function() {
+            const recordingStatus = document.getElementById('recordingStatus');
+            
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                this.textContent = '🎤';
+                recordingStatus.textContent = 'Processing...';
+                return;
+            }
+            
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    recordingStatus.textContent = 'Recording... Speak now';
+                    this.textContent = '⏹️';
+                    
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.ondataavailable = (e) => {
+                        audioChunks.push(e.data);
+                    };
+                    
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const formData = new FormData();
+                        formData.append('audio', audioBlob);
+                        formData.append('language', document.getElementById('language').value);
+                        
+                        fetch('/voice-assistant', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('recognizedText').textContent = data.transcribed_text;
+                            
+                            let paramsText = '';
+                            for (const [key, value] of Object.entries(data.extracted_params)) {
+                                paramsText += `${key}: ${value !== null ? value : 'Not detected'}<br>`;
+                            }
+                            document.getElementById('extractedParams').innerHTML = paramsText;
+                            
+                            document.getElementById('prediction').textContent = data.response;
+                            document.getElementById('voiceResult').style.display = 'block';
+                            recordingStatus.textContent = '';
+                            
+                            // Play audio response if available
+                            if (data.audio_path) {
+                                const audio = new Audio(data.audio_path);
+                                audio.play();
+                            }
+                        })
+                        .catch(error => {
+                            recordingStatus.textContent = 'Error: ' + error;
+                        });
+                    };
+                    
+                    mediaRecorder.start();
+                    
+                    // Stop recording after 15 seconds automatically
+                    setTimeout(() => {
+                        if (mediaRecorder.state === 'recording') {
+                            mediaRecorder.stop();
+                            this.textContent = '🎤';
+                        }
+                    }, 15000);
+                })
+                .catch(error => {
+                    console.error('Error accessing microphone:', error);
+                    recordingStatus.textContent = 'Error accessing microphone. Please check permissions.';
+                });
+        });
+        
+        // Manual prediction
+        document.getElementById('predictButton').addEventListener('click', function() {
+            const temperature = document.getElementById('temperature').value;
+            const humidity = document.getElementById('humidity').value;
+            const rainfall = document.getElementById('rainfall').value;
+            const month = document.getElementById('month').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!temperature || !humidity || !rainfall || !month) {
+                resultDiv.textContent = 'Please fill in all fields';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    temperature: parseFloat(temperature),
+                    humidity: parseFloat(humidity),
+                    rainfall: parseFloat(rainfall),
+                    month: parseInt(month)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.textContent = data.prediction;
+                resultDiv.style.display = 'block';
+            })
+            .catch(error => {
+                resultDiv.textContent = 'Error: ' + error;
+                resultDiv.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
