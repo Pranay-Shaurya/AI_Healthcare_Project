@@ -33,7 +33,7 @@ Data Visualization: Interactive risk visualization
 📋 Installation & Setup
 
 Clone this repository:
-bashCopygit clone https://github.com/Pranay02jul/AI_Healthcare_Project?tab=readme-ov-file
+bashCopygit clone https://github.com/Pranay-Shaurya/AI_Healthcare_Project
 cd dengue-ai-assistant
 
 Install dependencies:
