@@ -11,7 +11,9 @@ sdk_version: 5.23.0
 app_file: app.py
 pinned: false
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
-🦟 Project Overview
+
+Project Overview
+
 This project provides an AI-powered assistant that predicts dengue outbreak risk based on weather parameters. Featuring both voice interaction and a user-friendly web interface, it makes dengue risk assessment accessible to everyone.
 
 Key Features
@@ -61,7 +63,7 @@ Copy"Temperature is 32 degrees, humidity is 85 percent, rainfall is 120 mm, and 
 The system will process your speech, extract parameters, and respond with a risk assessment
 Choose your preferred response language from the dropdown menu
 
-🖱️ Using the Manual Interface
+Using the Manual Interface
 
 Enter the weather parameters in the form:
 
