@@ -13,7 +13,8 @@ pinned: false
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 🦟 Project Overview
 This project provides an AI-powered assistant that predicts dengue outbreak risk based on weather parameters. Featuring both voice interaction and a user-friendly web interface, it makes dengue risk assessment accessible to everyone.
-✨ Key Features
+
+Key Features
 
 Multilingual Voice Interaction: Speak to the system and get voice responses in your language
 Weather-Based Prediction: Uses machine learning to analyze temperature, humidity, rainfall, and season
@@ -21,7 +22,7 @@ Dual Interfaces: Access via voice assistant or web form based on preference
 Regional Language Support: Voice responses available in Hindi, Tamil, Telugu, Bengali, and English
 Real-time Processing: Quick responses for both voice and manual inputs
 
-🛠️ Technologies Used
+Technologies Used
 
 Speech Processing: Wav2Vec2 for Speech-to-Text conversion
 Machine Learning: Random Forest model trained on historical dengue data
@@ -30,7 +31,7 @@ Web Framework: Flask for backend API and web server
 UI Framework: Gradio for interactive machine learning interface
 Data Visualization: Interactive risk visualization
 
-📋 Installation & Setup
+Installation & Setup
 
 Clone this repository:
 bashCopygit clone https://github.com/Pranay-Shaurya/AI_Healthcare_Project
@@ -51,7 +52,7 @@ Gradio interface: http://localhost:7860
 
 
 
-🎤 Using the Voice Assistant
+Using the Voice Assistant
 
 Click the microphone button in the web interface
 Speak your weather parameters clearly:
