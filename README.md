@@ -96,7 +96,8 @@ Output: "High Risk" or "Low Risk" classification
 
 📊 Dataset
 The model was trained using historical dengue outbreak data from India spanning 1991-2022, combined with corresponding weather parameters. The dataset shows clear correlations between specific weather conditions and dengue outbreaks.
-🔮 Future Enhancements
+
+Future Enhancements
 
 Geolocation Integration: Automatically fetch local weather data
 Mobile App: Standalone application for Android and iOS
