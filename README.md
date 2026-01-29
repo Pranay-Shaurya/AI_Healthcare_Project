@@ -75,7 +75,7 @@ Month (1-12)
 
 Click "Predict" to get your risk assessment
 
-🔍 How It Works
+How It Works
 
 Voice Processing Pipeline:
 
